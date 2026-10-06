@@ -166,12 +166,12 @@ tabHistory.addEventListener('click', function() { switchTab('history'); });
 
 /* ─────────────────────────────────────────────
    6. fetchOrders() — Supabase에서 주문 내역 조회
-   Supabase의 'cafe_manu03' 테이블에서 최신 순으로 주문 데이터를 가져옵니다.
+   Supabase의 'cafe_menu03' 테이블에서 최신 순으로 주문 데이터를 가져옵니다.
 ───────────────────────────────────────────── */
 async function fetchOrders() {
     try {
         const { data, error } = await supabaseClient
-            .from('cafe_manu03')
+            .from('cafe_menu03')
             .select('*')
             .order('created_at', { ascending: false });
 
@@ -290,7 +290,7 @@ function createOrderCard(order) {
             // Supabase DB에서 해당 주문 행 삭제
             if (order.id) {
                 const { error } = await supabaseClient
-                    .from('cafe_manu03')
+                    .from('cafe_menu03')
                     .delete()
                     .eq('id', order.id);
 
@@ -408,9 +408,9 @@ orderForm.addEventListener('submit', async function(event) {
     btnOrder.textContent = '주문 저장 중...';
 
     try {
-        // ── 9-5. Supabase 'cafe_manu03' 테이블에 주문 저장 ──
+        // ── 9-5. Supabase 'cafe_menu03' 테이블에 주문 저장 ──
         const { error } = await supabaseClient
-            .from('cafe_manu03')
+            .from('cafe_menu03')
             .insert([
                 {
                     customer_name: name,
@@ -473,9 +473,9 @@ btnClearAll.addEventListener('click', async function() {
     btnClearAll.textContent = '삭제 중...';
 
     try {
-        // Supabase DB의 cafe_manu03 테이블 전체 삭제
+        // Supabase DB의 cafe_menu03 테이블 전체 삭제
         const { error } = await supabaseClient
-            .from('cafe_manu03')
+            .from('cafe_menu03')
             .delete()
             .neq('customer_name', ''); // 전체 행 대상
 
